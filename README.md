@@ -40,7 +40,7 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 ├─📁 .devcontainer   ->  [Configurações do devcontainer]
 ├─📁 .vscode         ->  [Definições de ambiente para o VSCode]
 ├─📁 docs            ->  [artefatos para documentação do repo]
-├─📁 streamlit_app   ->  [Implementação]
+├─📁 app             ->  [Implementação]
 │   ├─🐍 app.py     ->  [Entrypoint da aplicação]
 │   ├─📁 
 │   │   ...

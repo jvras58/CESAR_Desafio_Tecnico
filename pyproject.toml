@@ -11,6 +11,9 @@ python = "^3.11"
 streamlit = "^1.36.0"
 pandas = "^2.2.2"
 plotly = "^5.23.0"
+sqlalchemy = "^2.0.31"
+pydantic-settings = "^2.3.4"
+alembic = "^1.13.2"
 
 
 [tool.poetry.group.dev.dependencies]

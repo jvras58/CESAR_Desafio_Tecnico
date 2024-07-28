@@ -7,6 +7,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+## sqlite
+database.db
+
 # C extensions
 *.so
 
@@ -173,4 +176,4 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# End of https://www.toptal.com/developers/gitignore/api/python
+# End of https://www.toptal.com/developers/gitignore/api/pythondatabase.db

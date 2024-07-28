@@ -1,3 +1,3 @@
 start:
-	cd streamlit_app && \
+	cd app && \
 	streamlit run app.py
