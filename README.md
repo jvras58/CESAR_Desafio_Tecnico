@@ -37,28 +37,37 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 ### Organização do projeto
 ```
 /
-├─📁 .devcontainer   ->  [Configurações do devcontainer]
-├─📁 .vscode         ->  [Definições de ambiente para o VSCode]
-├─📁 docs            ->  [artefatos para documentação do repo]
-├─📁 app             ->  [Implementação]
-│   ├─🐍 app.py     ->  [Entrypoint da aplicação]
-│   ├─📁 config     ->  [Modulo de configuração]
-    │     └─🐍Settings.py  ->  [configuração de variaveis]
-│   ├─📁 dados     ->  [Modulo de preenchimento de dados fake]
-    │     └─🐍projects.py  ->  [dados fake]
-│   ├─📁 database     ->  [None]
-    │     └─🐍session.py  ->  [Mone]
-│   │   ...
-│   └─📁 
-├─📁 tests           ->  [Testes da aplicação]
-│   ├─📁 e2e        ->  [Implementações de testes automatizados em pytest]
-│   │                     
-├─📄 .env_sample     ->  [exemplo de .env]
+├─📁 .devcontainer     ->  Configurações do devcontainer
+├─📁 .vscode           ->  Definições de ambiente para o VSCode
+├─📁 docs              ->  Artefatos para documentação do repo
+├─📁 app               ->  Implementação
+│   ├─🐍 app.py         ->  Entrypoint da aplicação Streamlit
+│   ├─📁 config        ->  Módulo de configuração
+│   │   └─🐍 settings.py ->  Configuração de variáveis
+│   ├─📁 dados         ->  Módulo de preenchimento de dados fake
+│   │   └─🐍 projects_factory.py ->  Dados fake usando o Faker e o Factory
+│   │   └─🐍 inserir.py ->  Inserção de dados no banco de dados
+│   │    ...
+│   ├─📁 database      ->  Módulo de conexão com SQLAlchemy
+│   │   └─🐍 session.py ->  Sessão de conexão
+│   ├─📁 models        ->  Módulo de modelos do banco de dados
+│   │   └─🐍 projects.py ->  Model de projects
+│   │   └─ ...          ->  Outros modelos
+├─📁 migrations        ->  Migrations da aplicação usando o Alembic
+│   └─ ...             ->  Arquivos padrão do Alembic
+├─📁 scripts           ->  scripts para inserção dos dados
+│       └─🐍 generate_projects.py ->  Script de execução para inserir dados [FIXME: O SCRIPT ATUALMENTE ESTA NA RAIZ DO PROJETO]
+│       ...             
+├─📁 tests             ->  Testes da aplicação
+│   ├─📁 e2e           ->  Implementações de testes automatizados em pytest
+│   └─ ...             ->  Outros testes
+├─📄 .env_sample       ->  Exemplo de .env
 ├─📄 .gitignore
-├─📄 Makefile        ->  [Automações para o ambiente]
-├─📄 pyproject.toml  ->  [Definições para o projeto]
+├─📄 Makefile          ->  Automações para o ambiente
+├─📄 pyproject.toml    ->  Definições para o projeto
 ├─📄 README.md
-└─📄 ruff.toml       ->  [Regras de linter e formarter]
+└─📄 ruff.toml         ->  Regras de linter e formatter
+
 ```
 
 ## Montando o ambiente
@@ -91,6 +100,11 @@ Depois da compilação do container o VSCode abrirá o repositório em um ambien
 
 ### Principais comandos
 
+#### Levantar dados fakes com o Faker
+```
+$> make up
+```
+
 #### Levantar serviço
 ```
 $> make start
@@ -122,4 +136,3 @@ $> alembic upgrade head
 
 - [Planilha](docs/desafios.md)
 > **Nota:** Este documento será atualizado conforme o progresso das tarefas e a resolução.
-
