@@ -40,9 +40,14 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 ├─📁 .devcontainer   ->  [Configurações do devcontainer]
 ├─📁 .vscode         ->  [Definições de ambiente para o VSCode]
 ├─📁 docs            ->  [artefatos para documentação do repo]
-├─📁 streamlit_app   ->  [Implementação]
+├─📁 app             ->  [Implementação]
 │   ├─🐍 app.py     ->  [Entrypoint da aplicação]
-│   ├─📁 
+│   ├─📁 config     ->  [Modulo de configuração]
+    │     └─🐍Settings.py  ->  [configuração de variaveis]
+│   ├─📁 dados     ->  [Modulo de preenchimento de dados fake]
+    │     └─🐍projects.py  ->  [dados fake]
+│   ├─📁 database     ->  [None]
+    │     └─🐍session.py  ->  [Mone]
 │   │   ...
 │   └─📁 
 ├─📁 tests           ->  [Testes da aplicação]

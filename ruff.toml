@@ -1,5 +1,6 @@
 # where to look for source files
-src = ["cft_model", "tests"]
+src = ["src", "notebooks"]
+
 # Exclude a variety of commonly ignored directories.
 exclude = [
     ".bzr",
@@ -28,20 +29,21 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "migrations",
 ]
 
 # Same as Black.
 line-length = 80
 indent-width = 4
 
-# Assume Python 3.12
-target-version = "py312"
+# Include Jupyter notebooks.
+extend-include = ["*.ipynb"]
 
 [lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
-select = ["ALL"]
+select = ['ALL']
 ignore = [
     'INP001',
     'ANN101',
@@ -63,7 +65,11 @@ ignore = [
     'ARG001',
     'TRY003',
     'EM101',
+    'SLOT000',
+    'PLR0913',
+    'S602',
 ]
+
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
@@ -73,7 +79,7 @@ unfixable = []
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [format]
-# Like Black, use single quotes for strings.
+# Use single quotes for non-triple-quoted strings.
 quote-style = "single"
 
 # Like Black, indent with spaces, rather than tabs.
