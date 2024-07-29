@@ -5,13 +5,12 @@ from faker import Faker
 
 fake = Faker()
 
-# Função para gerar dados dos projetos
 def generate_project_data(num_projects: int) -> list:
     """Gera dados fictícios para os projetos."""
     projects = []
 
     for _ in range(num_projects):
-        name = fake.catch_phrase()
+        project_name = fake.catch_phrase()
 
         # Entre 2020 e 2022
         start_date = fake.date_between(start_date='-4y', end_date='-1y')
@@ -19,19 +18,19 @@ def generate_project_data(num_projects: int) -> list:
         # End date depois de start date
         end_date = fake.date_between(start_date=start_date, end_date='today')
 
-        custo_inicial = round(random.uniform(5000, 1000000), 2)
+        initial_budget = round(random.uniform(5000, 1000000), 2)
 
-        custo_final = round(random.uniform(5000, custo_inicial), 2)
+        project_cost = round(random.uniform(5000, initial_budget), 2)
 
-        receita = round(random.uniform(custo_final, custo_final * 1.5), 2)
+        revenue = round(random.uniform(project_cost, project_cost * 1.5), 2)
 
         projects.append({
-            'name': name,
+            'project_name': project_name,
             'start_date': start_date,
             'end_date': end_date,
-            'custo_inicial': custo_inicial,
-            'custo_final': custo_final,
-            'receita': receita,
+            'initial_budget': initial_budget,
+            'project_cost': project_cost,
+            'revenue': revenue,
         })
 
     return projects

@@ -56,7 +56,7 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 ├─📁 migrations        ->  Migrations da aplicação usando o Alembic
 │   └─ ...             ->  Arquivos padrão do Alembic
 ├─📁 scripts           ->  scripts para inserção dos dados
-│       └─🐍 generate_projects.py ->  Script de execução para inserir dados
+│       └─🐍 generate_projects.py ->  Script de execução para inserir dados [FIXME: O SCRIPT ATUALMENTE ESTA NA RAIZ DO PROJETO]
 │       ...             
 ├─📁 tests             ->  Testes da aplicação
 │   ├─📁 e2e           ->  Implementações de testes automatizados em pytest
@@ -100,6 +100,11 @@ Depois da compilação do container o VSCode abrirá o repositório em um ambien
 
 ### Principais comandos
 
+#### Levantar dados fakes com o Faker
+```
+$> make up
+```
+
 #### Levantar serviço
 ```
 $> make start
@@ -131,4 +136,3 @@ $> alembic upgrade head
 
 - [Planilha](docs/desafios.md)
 > **Nota:** Este documento será atualizado conforme o progresso das tarefas e a resolução.
-

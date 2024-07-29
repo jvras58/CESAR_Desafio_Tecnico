@@ -21,7 +21,7 @@ class Projects:
         autoincrement=True,
         comment='Identificador projeto.',
     )
-    name: Mapped[str] = mapped_column(
+    project_name: Mapped[str] = mapped_column(
         name='project_name',
         nullable=False,
         comment='Nome do projeto.',
@@ -36,19 +36,18 @@ class Projects:
         nullable=False,
         comment='Data de término do projeto.',
     )
-    custo_inicial: Mapped[float] = mapped_column(
+    initial_budget: Mapped[float] = mapped_column(
         name='initial_budget',
         nullable=False,
         comment='Orçamento inicial do projeto.',
     )
-    custo_final: Mapped[float] = mapped_column(
+    project_cost: Mapped[float] = mapped_column(
         name='project_cost',
         nullable=False,
         comment='Custo total do projeto.',
     )
-    receita: Mapped[float] = mapped_column(
+    revenue: Mapped[float] = mapped_column(
         name='revenue',
         nullable=False,
         comment='Receita do projeto.',
     )
-
