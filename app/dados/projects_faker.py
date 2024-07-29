@@ -20,7 +20,12 @@ def generate_project_data(num_projects: int) -> list:
 
         initial_budget = round(random.uniform(5000, 1000000), 2)
 
-        project_cost = round(random.uniform(5000, initial_budget), 2)
+        # Aleatoriamente decidir se o project_cost deve exceder o initial_budget
+        if random.choice([True, False]):
+            project_cost = round(random.uniform(initial_budget,
+                                                initial_budget * 1.5), 2)
+        else:
+            project_cost = round(random.uniform(5000, initial_budget), 2)
 
         revenue = round(random.uniform(project_cost, project_cost * 1.5), 2)
 
