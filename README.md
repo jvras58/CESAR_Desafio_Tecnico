@@ -45,7 +45,9 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 │   ├─📁 config        ->  Módulo de configuração
 │   │   └─🐍 settings.py ->  Configuração de variáveis
 │   ├─📁 dados         ->  Módulo de preenchimento de dados fake
-│   │   └─🐍 projects.py ->  Dados fake usando o Faker e o Factory
+│   │   └─🐍 projects_factory.py ->  Dados fake usando o Faker e o Factory
+│   │   └─🐍 inserir.py ->  Inserção de dados no banco de dados
+│   │    ...
 │   ├─📁 database      ->  Módulo de conexão com SQLAlchemy
 │   │   └─🐍 session.py ->  Sessão de conexão
 │   ├─📁 models        ->  Módulo de modelos do banco de dados
@@ -53,6 +55,9 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 │   │   └─ ...          ->  Outros modelos
 ├─📁 migrations        ->  Migrations da aplicação usando o Alembic
 │   └─ ...             ->  Arquivos padrão do Alembic
+├─📁 scripts           ->  scripts para inserção dos dados
+│       └─🐍 generate_projects.py ->  Script de execução para inserir dados
+│       ...             
 ├─📁 tests             ->  Testes da aplicação
 │   ├─📁 e2e           ->  Implementações de testes automatizados em pytest
 │   └─ ...             ->  Outros testes
