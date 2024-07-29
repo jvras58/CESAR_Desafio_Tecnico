@@ -35,7 +35,7 @@ anos?
 
 ## Atividades Derivadas
 
-- [ ] Criar dados fakes para "povoar" essa tabela 
+- [v] Criar dados fakes para "povoar" essa tabela 
 > **Nota:** usando o alembic e o faker para criar e popular a tabela 
 
 - [ ] Representar graficamente usando o streamlit
