@@ -17,10 +17,9 @@ from streamlit.runtime.caching import cache_data
 # Título do dashboard
 st.title('Dashboard do CESAR - Desafio Técnico')
 
+
 # Configuração da conexão com o banco de dados
-engine = create_engine('sqlite:///../database.db')
-Session = sessionmaker(bind=engine)
-session = Session()
+DATABASE_URL = 'sqlite:///../database.db'
 
 @cache_data
 def get_projects(limit: int | None = None) -> list:
@@ -28,10 +27,13 @@ def get_projects(limit: int | None = None) -> list:
 
     limitando a quantidade se especificado.
     """
-    query = session.query(Projects)
-    if limit:
-        query = query.limit(limit)
-    return query.all()
+    engine = create_engine(DATABASE_URL)
+    session = sessionmaker(bind=engine)
+    with session() as session:
+        query = session.query(Projects)
+        if limit:
+            query = query.limit(limit)
+        return query.all()
 
 @cache_data
 def get_top_5_projects_mais_receita(end_date: datetime) -> list:
@@ -39,9 +41,12 @@ def get_top_5_projects_mais_receita(end_date: datetime) -> list:
 
     até a data especificada.
     """
-    query = session.query(Projects).filter(Projects.end_date <= end_date)\
-        .order_by(Projects.revenue.desc()).limit(5)
-    return query.all()
+    engine = create_engine(DATABASE_URL)
+    session = sessionmaker(bind=engine)
+    with session() as session:
+        query = session.query(Projects).filter(Projects.end_date <= end_date)\
+            .order_by(Projects.revenue.desc()).limit(5)
+        return query.all()
 
 def get_project_ultimo_ano(projects: list) -> list:
     """Filtra projetos realizados no último ano.
@@ -91,6 +96,8 @@ with st.spinner('Carregando dados dos projetos...'):
             title='Rentabilidade Líquida dos Projetos do Último Ano',
             xaxis_tickangle=-45,
             font={'size': 14},
+            margin={'t': 50, 'b': 150, 'l': 50, 'r': 50},
+            height=600,
         )
 
         # Adicionando cores diferentes para cada barra
