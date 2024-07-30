@@ -26,7 +26,7 @@ CREATE TABLE Projects (
 > **Resposta:** 
 ```sql
 
-SELECT -- selecione as colunas que devem ser vistas
+SELECT -- 
     project_name,
     end_date,
     (revenue - project_cost) AS rentabilidade_liquida_ultimo_ano -- ainda é as que devem ser vistas mais tem um calculo..
@@ -64,9 +64,19 @@ LIMIT 5; --limita em 5
 - [ ] Qual foi a porcentagem de projetos que excederam o orçamento inicial a cada semestre nos últimos 2 
 anos?
 ```sql
-SELECT 
-FROM
-WHERE
+SELECT
+    strftime('%Y', end_date) AS year, -- Extrai o ano da data de término (end_date) dos projetos.
+    CASE
+        WHEN strftime('%m', end_date) BETWEEN '01' AND '06' THEN '1st Semestre'
+        WHEN strftime('%m', end_date) BETWEEN '07' AND '12' THEN '2nd Semestre' -- Usa a função strftime para extrair o mês (%m) da data de término e, com base no mês, atribui o semestre (1º ou 2º).
+    END AS Semestre,
+    COUNT(*) AS total_projects, -- Faz os calculos de custo final e calculo de porcentagem 
+    SUM(CASE WHEN project_cost > initial_budget THEN 1 ELSE 0 END) AS projetos_excedido_orçamento, -- Filtra os projetos cuja data de término (end_date) seja nos últimos dois anos a partir da data atual.
+    (SUM(CASE WHEN project_cost > initial_budget THEN 1 ELSE 0 END) * 100.0 / COUNT(*)) AS porcentagem_excedido_orçamento
+FROM Projects
+WHERE end_date >= date('now', '-2 years')
+GROUP BY year, Semestre -- agrupa por semestre
+ORDER BY year, Semestre; -- ordena por semestre
 ```
 
 
