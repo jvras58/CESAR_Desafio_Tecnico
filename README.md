@@ -98,6 +98,17 @@ E para instacia-lo no VSCODE é recomendado as seguintes configurações:
 
 Depois da compilação do container o VSCode abrirá o repositório em um ambiente encapsulado e executando diretamente de dentro do container como configurado nas definições do **/.devconainer**.
 
+#### Procedimento para iniciar
+1. inicie o ambiente virtual do poetry
+```
+$> poetry shell
+```
+2. instale as dependencias definidas no pyproject.toml
+```
+$> poetry shell
+```
+- Pronto agora voce esta pronto para começar a usar!
+
 ### Principais comandos
 
 #### Levantar dados fakes com o Faker
