@@ -20,6 +20,8 @@ st.title('Dashboard do CESAR - Desafio Técnico')
 
 # Configuração da conexão com o banco de dados
 DATABASE_URL = 'sqlite:///../database.db'
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(bind=engine)
 
 @cache_data
 def get_projects(limit: int | None = None) -> list:
@@ -27,9 +29,7 @@ def get_projects(limit: int | None = None) -> list:
 
     limitando a quantidade se especificado.
     """
-    engine = create_engine(DATABASE_URL)
-    session = sessionmaker(bind=engine)
-    with session() as session:
+    with Session() as session:
         query = session.query(Projects)
         if limit:
             query = query.limit(limit)
@@ -41,9 +41,7 @@ def get_top_5_projects_mais_receita(end_date: datetime) -> list:
 
     até a data especificada.
     """
-    engine = create_engine(DATABASE_URL)
-    session = sessionmaker(bind=engine)
-    with session() as session:
+    with Session() as session:
         query = session.query(Projects).filter(Projects.end_date <= end_date)\
             .order_by(Projects.revenue.desc()).limit(5)
         return query.all()
@@ -65,7 +63,7 @@ def get_project_ultimo_ano(projects: list) -> list:
     ]
 
 # Buscar dados dos projetos
-projects = get_projects(10)
+projects = get_projects(50)
 
 # Exibir feedback interativo
 with st.spinner('Carregando dados dos projetos...'):
