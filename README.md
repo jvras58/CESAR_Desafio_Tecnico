@@ -10,7 +10,7 @@
 
 ## 📖 Sobre o Projeto
 
-Este é um projeto que visa contemplar o processo seletivo de estagio na cesar
+Este é um projeto que visa contemplar o processo seletivo de estagio na cesar - [Leia](docs/CESAR_Desafio.pdf)
 
 ## 🚀 Tecnologias e Ferramentas
 
@@ -32,6 +32,7 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 | Ruff                          | v0.4.x    |
 | Pytest                        | v8.2.x    |
 | Pytest Coverage (pytest-cov)  | v5.0.x    |
+| Docker Engine                 | vx.x.x    |
 | Taskipy                       | v1.12.x   |
 
 ### Organização do projeto
@@ -55,12 +56,15 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 │   │   └─ ...          ->  Outros modelos
 ├─📁 migrations        ->  Migrations da aplicação usando o Alembic
 │   └─ ...             ->  Arquivos padrão do Alembic
-├─📁 scripts           ->  scripts para inserção dos dados
-│       └─🐍 generate_projects.py ->  Script de execução para inserir dados [FIXME: O SCRIPT ATUALMENTE ESTA NA RAIZ DO PROJETO]
+├─📁 scripts           ->  scripts bases transformados em sqlalchemy orm
+│       └─🛢 grentabilidade_liquida.sql ->  Script SQL puro (sqlite)
+│       └─🛢 porcentagem_excedentes.sql ->  Script SQL puro (sqlite)
+│       └─🛢 mais_receita_2_semestre_2024.sql ->  Script SQL puro (sqlite)
 │       ...             
 ├─📁 tests             ->  Testes da aplicação
 │   ├─📁 e2e           ->  Implementações de testes automatizados em pytest
 │   └─ ...             ->  Outros testes
+|─🐍 generate_projects.py ->  Script de execução para inserir dados fakes
 ├─📄 .env_sample       ->  Exemplo de .env
 ├─📄 .gitignore
 ├─📄 Makefile          ->  Automações para o ambiente
@@ -116,14 +120,11 @@ $> poetry shell
 $> make up
 ```
 
-#### Levantar serviço
+#### Levantar o dashboard
 ```
 $> make start
 ```
-#### Executar testes 
-```
-$> make test_all
-```
+
 #### Adcionar novas dependencias
 ```
 # Adicionar uma nova lib para o runtime do projeto
@@ -143,7 +144,4 @@ $> alembic upgrade head
 
 #### Desafio:
 
-- [Leia](docs/CESAR_Desafio.pdf)
-
 - [Planilha](docs/desafios.md)
-> **Nota:** Este documento será atualizado conforme o progresso das tarefas e a resolução.
