@@ -9,7 +9,7 @@ import pandas as pd
 import plotly.express as px
 import pytz
 import streamlit as st
-from app.dados.controller import get_projects, get_top_5_projects_mais_receita
+from dados.controller import get_projects, get_top_5_projects_mais_receita
 from utils.utils import generate_colors, get_project_ultimo_ano
 
 st.title('Dashboard do CESAR - Desafio Técnico')
