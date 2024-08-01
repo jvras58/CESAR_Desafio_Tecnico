@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import random
 from datetime import datetime, timedelta
 from pathlib import Path
-import random
+
 import pandas as pd
 import plotly.express as px
 import pytz
@@ -73,7 +74,7 @@ def generate_colors(n: int) -> list:
     """Gera uma lista de cores aleatórias em formato hexadecimal."""
     colors = []
     for _ in range(n):
-        color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+        color = f"#{random.randint(0, 0xFFFFFF):06x}"
         colors.append(color)
     return colors
 
@@ -103,7 +104,7 @@ with st.spinner('Carregando dados dos projetos...'):
         projects_df = pd.DataFrame(project_ultimo_ano)
         st.write("Dados dos projetos do último ano:")
         st.write(projects_df)
-        
+
         colors = generate_colors(len(projects_df))
 
         fig = px.bar(
@@ -113,7 +114,7 @@ with st.spinner('Carregando dados dos projetos...'):
             title='Rentabilidade Líquida dos Projetos do Último Ano',
             text='Rentabilidade_liquida',
             color='nome',
-            color_discrete_sequence=colors
+            color_discrete_sequence=colors,
         )
 
         fig.update_layout(
@@ -129,7 +130,7 @@ with st.spinner('Carregando dados dos projetos...'):
 
         fig.update_traces(
             texttemplate='%{text:.2s}',
-            textposition='outside'
+            textposition='outside',
         )
 
 
@@ -159,9 +160,9 @@ if top_5_projects:
         )
     st.title("Dados dos 5 projetos com maior receita até o final de 2024:")
     st.write(top_5_projects_df)
-    
+
     colors = generate_colors(len(top_5_projects_df))
-    
+
     fig_top_5 = px.bar(
         top_5_projects_df,
         y='nome',
@@ -170,7 +171,7 @@ if top_5_projects:
         title='Top 5 Projetos por Receita até o Final de 2024',
         text='Receita',
         color='nome',
-        color_discrete_sequence=colors
+        color_discrete_sequence=colors,
     )
 
     fig_top_5.update_layout(
@@ -183,7 +184,7 @@ if top_5_projects:
 
     fig_top_5.update_traces(
         texttemplate='%{text:.2s}',
-        textposition='outside'
+        textposition='outside',
     )
 
     st.plotly_chart(fig_top_5)

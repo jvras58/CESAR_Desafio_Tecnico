@@ -21,7 +21,7 @@ CREATE TABLE Projects (
 > explicando o raciocínio para construir cada query;
 
 
-- [ ] Qual foi a rentabilidade líquida (receita [revenue] - custo [project_cost]) de cada projeto realizado no último ano?
+- [x] Qual foi a rentabilidade líquida (receita [revenue] - custo [project_cost]) de cada projeto realizado no último ano?
 
 > **Resposta:** 
 ```sql
@@ -44,7 +44,7 @@ WHERE
    EXTRACT(YEAR FROM end_date) = EXTRACT(YEAR FROM CURRENT_DATE) - 1;
 ```
 
-- [ ] Quais foram os 5 projetos que geraram mais receita até o final do segundo trimestre de 2024?
+- [x] Quais foram os 5 projetos que geraram mais receita até o final do segundo trimestre de 2024?
 > **Resposta:** 
 ```sql
 SELECT 
@@ -61,7 +61,7 @@ ORDER BY -- ordena por
 LIMIT 5; --limita em 5
 ```
 
-- [ ] Qual foi a porcentagem de projetos que excederam o orçamento inicial a cada semestre nos últimos 2 
+- [x] Qual foi a porcentagem de projetos que excederam o orçamento inicial a cada semestre nos últimos 2 
 anos?
 ```sql
 SELECT
@@ -84,17 +84,18 @@ ORDER BY year, Semestre; -- ordena por semestre
 > SQL anteriores para o time de gestão. Justifique suas escolhas de visualização.
 
 
-- [ ] Crie um DOC, PPT ou Canva para montar seu desafio e enviar como resposta para o e-mail
+- [x] Crie um DOC, PPT ou Canva para montar seu desafio e enviar como resposta para o e-mail
 
 
 ## Atividades Derivadas
 
-- [v] Criar dados fakes para "povoar" essa tabela 
+- [x] Criar dados fakes para "povoar" essa tabela 
 > **Nota:** usando o alembic e o faker para criar e popular a tabela 
 
-- [ ] Representar graficamente usando o streamlit
-> **Nota:** Estudar mais a fundo uma boa arquitetura para isso
+- [x] Representar graficamente usando o streamlit
+> **Nota:** Estudar mais a fundo uma boa arquitetura de conexão com um banco de dados externo
 
 - [ ] Testes e2e
+> **Nota:** usando pytest
 
-- [v] Conteinizar a aplicação  
+- [x] Conteinizar a aplicação  
