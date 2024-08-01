@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 from pathlib import Path
-
+import random
 import pandas as pd
 import plotly.express as px
 import pytz
@@ -14,14 +14,20 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from streamlit.runtime.caching import cache_data
 
-# Título do dashboard
 st.title('Dashboard do CESAR - Desafio Técnico')
 
+# ----------------------------------
+#  Banco de dados Configuração
+# ----------------------------------
 
-# Configuração da conexão com o banco de dados
 DATABASE_URL = 'sqlite:///../database.db'
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
+
+
+# ----------------------------------
+#  Controller
+# ----------------------------------
 
 @cache_data
 def get_projects(limit: int | None = None) -> list:
@@ -62,32 +68,54 @@ def get_project_ultimo_ano(projects: list) -> list:
         if project.end_date.replace(tzinfo=pytz.utc) >= one_year_ago
     ]
 
+
+def generate_colors(n: int) -> list:
+    """Gera uma lista de cores aleatórias em formato hexadecimal."""
+    colors = []
+    for _ in range(n):
+        color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+        colors.append(color)
+    return colors
+
+
+
+
+
+# ----------------------------------
+#  Limite de dados
+# ----------------------------------
 # Buscar dados dos projetos
 projects = get_projects(50)
 
-# Exibir feedback interativo
+
+# ----------------------------------
+#  Grafico de barras 1: Rentabilidade líquida
+# ----------------------------------
+
 with st.spinner('Carregando dados dos projetos...'):
     st.title("Rentabilidade líquida de cada projeto realizado no último ano.")
     st.write(f"Total de projetos retornados pelo Banco: {len(projects)}")
 
-    # Filtra projetos do último ano e calcular a rentabilidade líquida
     project_ultimo_ano = get_project_ultimo_ano(projects)
     st.write(f"Total de projetos do último ano: {len(project_ultimo_ano)}")
 
-    # Cria o gráfico de rentabilidade líquida
     if project_ultimo_ano:
         projects_df = pd.DataFrame(project_ultimo_ano)
         st.write("Dados dos projetos do último ano:")
         st.write(projects_df)
+        
+        colors = generate_colors(len(projects_df))
+
         fig = px.bar(
             projects_df,
             x='nome',
             y='Rentabilidade_liquida',
             title='Rentabilidade Líquida dos Projetos do Último Ano',
             text='Rentabilidade_liquida',
+            color='nome',
+            color_discrete_sequence=colors
         )
 
-        # Atualizações de layout para melhorar a legibilidade
         fig.update_layout(
             xaxis_title='Nome do Projeto',
             yaxis_title='Rentabilidade Líquida',
@@ -96,27 +124,30 @@ with st.spinner('Carregando dados dos projetos...'):
             font={'size': 14},
             margin={'t': 50, 'b': 150, 'l': 50, 'r': 50},
             height=600,
+            showlegend=False,
         )
 
-        # Adicionando cores diferentes para cada barra
-        fig.update_traces(marker_color=px.colors.qualitative.Plotly,
-                        texttemplate='%{text:.2s}',
-                        textposition='outside')
+        fig.update_traces(
+            texttemplate='%{text:.2s}',
+            textposition='outside'
+        )
 
-        # Exibir gráfico
+
         st.plotly_chart(fig)
     else:
         st.write("Nenhum projeto realizado no último ano.")
 
-# Ler o conteúdo do arquivo SQL
 with Path('/workspace/scripts/rentabilidade_liquida.sql').open() as file:
     rentabilidade_liquida_sql = file.read()
 
-# Exibir a consulta SQL abaixo do gráfico
 st.markdown("### Consulta SQL")
 st.code(rentabilidade_liquida_sql, language='sql')
 
-# Exibi gráfico dos 5 proj > receita até o final do segundo trimestre de 2024
+
+# ----------------------------------
+#  Grafico de barras 2: + Receita TOP 5
+# ----------------------------------
+
 final_2024_2_trimestre = datetime(2024, 6, 30, tzinfo=pytz.utc)
 top_5_projects = get_top_5_projects_mais_receita(final_2024_2_trimestre)
 
@@ -128,6 +159,9 @@ if top_5_projects:
         )
     st.title("Dados dos 5 projetos com maior receita até o final de 2024:")
     st.write(top_5_projects_df)
+    
+    colors = generate_colors(len(top_5_projects_df))
+    
     fig_top_5 = px.bar(
         top_5_projects_df,
         y='nome',
@@ -135,6 +169,8 @@ if top_5_projects:
         orientation='h',
         title='Top 5 Projetos por Receita até o Final de 2024',
         text='Receita',
+        color='nome',
+        color_discrete_sequence=colors
     )
 
     fig_top_5.update_layout(
@@ -142,20 +178,22 @@ if top_5_projects:
         yaxis_title='Nome do Projeto',
         title='Top 5 Projetos por Receita até o Final de 2024',
         font={'size': 14},
+        showlegend=False,
     )
 
-    fig_top_5.update_traces(marker_color=px.colors.qualitative.Plotly,
-                            texttemplate='%{text:.2s}',
-                            textposition='outside')
+    fig_top_5.update_traces(
+        texttemplate='%{text:.2s}',
+        textposition='outside'
+    )
 
     st.plotly_chart(fig_top_5)
 else:
     st.write("Nenhum projeto com receita até o final de 2024.")
 
-# Ler o conteúdo do arquivo SQL
+
 with Path('/workspace/scripts/mais_receita_2_semestre_2024.sql').open() as file:
     mais_receita_2_semestre = file.read()
 
-# Exibir a consulta SQL abaixo do gráfico
+
 st.markdown("### Consulta SQL")
 st.code(mais_receita_2_semestre, language='sql')
