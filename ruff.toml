@@ -45,6 +45,7 @@ extend-include = ["*.ipynb"]
 # McCabe complexity (`C901`) by default.
 select = ['ALL']
 ignore = [
+    'E501',  #FIXME: line too long (Black should handle)
     'INP001',
     'ANN101',
     'T201',

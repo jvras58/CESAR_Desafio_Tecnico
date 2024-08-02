@@ -45,7 +45,7 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 │   ├─🐍 app.py         ->  Entrypoint da aplicação Streamlit
 │   ├─📁 config        ->  Módulo de configuração
 │   │   └─🐍 settings.py ->  Configuração de variáveis
-│   ├─📁 dados         ->  Módulo de preenchimento de dados fake
+│   ├─📁 data         ->  Módulo de preenchimento de dados fake e controllador do streamlit
 │   │   └─🐍 projects_factory.py ->  Dados fake usando o Faker e o Factory
 │   │   └─🐍 inserir.py ->  Inserção de dados no banco de dados
 │   │    ...

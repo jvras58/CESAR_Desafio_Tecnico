@@ -2,7 +2,7 @@
 from contextlib import contextmanager
 from typing import Generator
 
-from app.dados.projects_faker import generate_project_data
+from app.data.projects_faker import generate_project_data
 from app.database.session import get_session
 from app.models.projects import Projects
 from sqlalchemy.orm import Session

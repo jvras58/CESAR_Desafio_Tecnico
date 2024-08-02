@@ -1,125 +1,66 @@
-"""Dashboard do CESAR - Desafio Técnico."""
-
-from __future__ import annotations
-
-from datetime import datetime
-from pathlib import Path
-
-import pandas as pd
-import plotly.express as px
-import pytz
+"""Arquivo principal do aplicativo para executar o aplicativo Streamlit."""
 import streamlit as st
-from dados.controller import get_projects, get_top_5_projects_mais_receita
-from utils.utils import generate_colors, get_project_ultimo_ano
+from graphs.graph_orcamento_excedido import orcamento_excedido_page
+from graphs.graph_rentabilidade import rentabilidade_liquida_page
+from graphs.graph_top5_receitas import top5_receitas_page
+from streamlit_option_menu import option_menu
 
-st.title('Dashboard do CESAR - Desafio Técnico')
-
-# ----------------------------------
-#  Limite de dados
-# ----------------------------------
-# Buscar dados dos projetos
-projects = get_projects(50)
-
-# ----------------------------------
-#  Grafico de barras 1: Rentabilidade líquida
-# ----------------------------------
-
-with st.spinner('Carregando dados dos projetos...'):
-    st.title("Rentabilidade líquida de cada projeto realizado no último ano.")
-    st.write(f"Total de projetos retornados pelo Banco: {len(projects)}")
-
-    project_ultimo_ano = get_project_ultimo_ano(projects)
-    st.write(f"Total de projetos do último ano: {len(project_ultimo_ano)}")
-
-    if project_ultimo_ano:
-        projects_df = pd.DataFrame(project_ultimo_ano)
-        st.write("Dados dos projetos do último ano:")
-        st.write(projects_df)
-
-        colors = generate_colors(len(projects_df))
-
-        fig = px.bar(
-            projects_df,
-            x='nome',
-            y='Rentabilidade_liquida',
-            title='Rentabilidade Líquida dos Projetos do Último Ano',
-            text='Rentabilidade_liquida',
-            color='nome',
-            color_discrete_sequence=colors,
-        )
-
-        fig.update_layout(
-            xaxis_title='Nome do Projeto',
-            yaxis_title='Rentabilidade Líquida',
-            title='Rentabilidade Líquida dos Projetos do Último Ano',
-            xaxis_tickangle=-45,
-            font={'size': 14},
-            margin={'t': 50, 'b': 150, 'l': 50, 'r': 50},
-            height=600,
-            showlegend=False,
-        )
-
-        fig.update_traces(
-            texttemplate='%{text:.2s}',
-            textposition='outside',
-        )
-
-        st.plotly_chart(fig)
-    else:
-        st.write("Nenhum projeto realizado no último ano.")
-
-with Path('/workspace/scripts/rentabilidade_liquida.sql').open() as file:
-    rentabilidade_liquida_sql = file.read()
-
-st.markdown("### Consulta SQL")
-st.code(rentabilidade_liquida_sql, language='sql')
-
-# ----------------------------------
-#  Grafico de barras 2: + Receita TOP 5
-# ----------------------------------
-
-final_2024_2_trimestre = datetime(2024, 6, 30, tzinfo=pytz.utc)
-top_5_projects = get_top_5_projects_mais_receita(final_2024_2_trimestre)
-
-if top_5_projects:
-    top_5_projects_df = pd.DataFrame(
-    [{'nome': p.project_name, 'Receita': p.revenue} for p in top_5_projects],
-    )
-    st.title("Dados dos 5 projetos com maior receita até o final de 2024:")
-    st.write(top_5_projects_df)
-
-    colors = generate_colors(len(top_5_projects_df))
-
-    fig_top_5 = px.bar(
-        top_5_projects_df,
-        y='nome',
-        x='Receita',
-        orientation='h',
-        title='Top 5 Projetos por Receita até o Final de 2024',
-        text='Receita',
-        color='nome',
-        color_discrete_sequence=colors,
+# Sidebar menu
+with st.sidebar:
+    selected = option_menu(
+        "Menu",
+        [
+            "Home",
+            "Rentabilidade Líquida",
+            "Top 5 Receitas",
+            "Orçamento Excedido",
+        ],
+        icons=["house", "bar-chart-line", "graph-up-arrow", "cash-stack"],
+        menu_icon="cast",
+        default_index=0,
     )
 
-    fig_top_5.update_layout(
-        xaxis_title='Receita',
-        yaxis_title='Nome do Projeto',
-        title='Top 5 Projetos por Receita até o Final de 2024',
-        font={'size': 14},
-        showlegend=False,
-    )
-
-    fig_top_5.update_traces(
-        texttemplate='%{text:.2s}',
-        textposition='outside',
-    )
-
-    st.plotly_chart(fig_top_5)
+# Conteúdo para cada seleção de menu
+if selected == "Rentabilidade Líquida":
+    rentabilidade_liquida_page()
+elif selected == "Top 5 Receitas":
+    top5_receitas_page()
+elif selected == "Orçamento Excedido":
+    orcamento_excedido_page()
 else:
-    st.write("Nenhum projeto com receita até o final de 2024.")
+    st.title("Dashboard do CESAR - Desafio Técnico")
 
-with Path('/workspace/scripts/mais_receita_2_semestre_2024.sql').open() as file:
-    mais_receita_2_semestre = file.read()
+    st.header("Bem-vindo ao Dashboard do CESAR!")
+    st.write("Este dashboard é projetado para avaliação de Estagio.")
 
-st.markdown("### Consulta SQL")
-st.code(mais_receita_2_semestre, language='sql')
+    st.markdown(
+        """
+        <div style="display: flex; justify-content: center;">
+            <img src="https://www.cesar.org.br/_next/image?url=%2Flogo.png&w=128&q=75" alt="Logo">
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.subheader("Sobre o Dashboard")
+    st.write(
+        "Utilize o menu lateral para navegar pelas diferentes visualizações de dados. "
+        "Cada seção do dashboard oferece uma análise específica dos dados dos projetos.",
+    )
+
+    st.subheader("Funcionalidades Principais")
+    st.markdown(
+    """
+    - **Rentabilidade Líquida**: Avalie o desempenho financeiro dos projetos.
+    - **Top 5 Receitas**: Descubra quais projetos estão gerando mais receita.
+    - **Orçamento Excedido**: Identifique projetos que ultrapassaram o orçamento.
+    """,
+    )
+
+    st.info(
+        "Os gráficos são gerados a partir de dados fictícios carregados de um banco de dados SQLite "
+        "e visualizados com a biblioteca Plotly.",
+    )
+
+    if st.button("Saiba Mais"):
+        st.write("Para mais informações, entre em contato [Linkedin](https://www.linkedin.com/in/-jonathasvinicius/).")
