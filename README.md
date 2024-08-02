@@ -45,17 +45,22 @@ Essas e outras libs e tecnologias usadas neste projeto são:
 │   ├─🐍 app.py         ->  Entrypoint da aplicação Streamlit
 │   ├─📁 config        ->  Módulo de configuração
 │   │   └─🐍 settings.py ->  Configuração de variáveis
-│   ├─📁 data         ->  Módulo de preenchimento de dados fake e controllador do streamlit
+│   ├─📁 data         ->  Módulo de preenchimento e configuração dos dados
 │   │   └─🐍 projects_factory.py ->  Dados fake usando o Faker e o Factory
 │   │   └─🐍 inserir.py ->  Inserção de dados no banco de dados
-│   │    ...
+│   │   └─🐍 controller.py ->  controller do streamlit
+│   ├─📁 graphs         ->  Módulo de criação dos graficos com plotly
+│   │   └─🐍 graph_nome_grafico.py ->  Graficos usando o orm do sqlalchemy
+│   │   ...
 │   ├─📁 database      ->  Módulo de conexão com SQLAlchemy
 │   │   └─🐍 session.py ->  Sessão de conexão
 │   ├─📁 models        ->  Módulo de modelos do banco de dados
 │   │   └─🐍 projects.py ->  Model de projects
 │   │   └─ ...          ->  Outros modelos
 ├─📁 migrations        ->  Migrations da aplicação usando o Alembic
-│   └─ ...             ->  Arquivos padrão do Alembic
+│       └─ ...             ->  Arquivos padrão do Alembic
+├─📁 utils                 ->  arquivos reutilizados na aplicação
+│       └─🐍 utils.py      -> Arquivo reutilizavel generate_colors & get_project_ultimo_ano
 ├─📁 scripts           ->  scripts bases transformados em sqlalchemy orm
 │       └─🛢 grentabilidade_liquida.sql ->  Script SQL puro (sqlite)
 │       └─🛢 porcentagem_excedentes.sql ->  Script SQL puro (sqlite)
@@ -136,7 +141,7 @@ $> poetry add <<nome_da_lib>> --group dev
 #### Operar o alembic
 ```
 # Criar um novo arquivo de migração
-$> alembic revision --autogenerete -m "nome_da_migracao"
+$> alembic revision --autogenerate -m "nome_da_migracao"
 
 # Atualizar o banco de dados
 $> alembic upgrade head
