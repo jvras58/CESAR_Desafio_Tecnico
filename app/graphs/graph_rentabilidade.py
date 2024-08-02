@@ -15,7 +15,6 @@ def rentabilidade_liquida_page() -> None:
     projects = get_projects(50)
 
     with st.spinner('Carregando dados dos projetos...'):
-        st.subheader("Rentabilidade líquida de cada projeto realizado no último ano.")
 
         project_ultimo_ano = get_project_ultimo_ano(projects)
 

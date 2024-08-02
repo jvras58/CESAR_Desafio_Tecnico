@@ -49,7 +49,8 @@ def top5_receitas_page() -> None:
             xaxis_title='Receita',
             yaxis_title='Nome do Projeto',
             title='Top 5 Projetos por Receita até o Final de 2024',
-            font={'size': 14},
+            margin={'t': 50, 'b': 150, 'l': 50, 'r': 50},
+            height=600,
             showlegend=False,
         )
 
