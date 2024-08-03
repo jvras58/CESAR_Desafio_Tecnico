@@ -12,7 +12,7 @@ def rentabilidade_liquida_page() -> None:
     """Exibi a page Rentabilidade Líquida."""
     st.title("Rentabilidade Líquida de Projetos")
 
-    projects = get_projects(50)
+    projects = get_projects(20)
 
     with st.spinner('Carregando dados dos projetos...'):
 
