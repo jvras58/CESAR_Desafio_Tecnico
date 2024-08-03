@@ -27,8 +27,9 @@ def orcamento_excedido_page() -> None:
             st.write("Dados dos Projetos que Excederam o Orçamento por Semestre:")
             st.write(excedente_data)
 
+            script_path = Path('/workspace/scripts/porcentagem_excedentes.sql')
             try:
-                with Path('/workspace/scripts/porcentagem_excedentes.sql').open() as file:
+                with script_path.open() as file:
                     porcentagem_excedentes = file.read()
 
                 st.markdown("### Consulta SQL")
