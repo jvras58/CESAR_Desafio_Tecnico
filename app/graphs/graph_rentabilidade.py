@@ -27,11 +27,14 @@ def rentabilidade_liquida_page() -> None:
                 st.write(projects_df)
 
                 script_path = Path('/workspace/scripts/rentabilidade_liquida.sql')
-                with script_path.open() as file:
-                    rentabilidade_liquida_sql = file.read()
+                try:
+                    with script_path.open() as file:
+                        rentabilidade_liquida_sql = file.read()
 
-                st.markdown("### Consulta SQL")
-                st.code(rentabilidade_liquida_sql, language='sql')
+                    st.markdown("### Consulta SQL")
+                    st.code(rentabilidade_liquida_sql, language='sql')
+                except FileNotFoundError:
+                    st.warning("Script SQL Somente aparece em desenvolvimento.")
 
             colors = generate_colors(len(projects_df))
 

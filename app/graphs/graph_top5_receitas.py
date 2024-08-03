@@ -25,12 +25,14 @@ def top5_receitas_page() -> None:
             st.write("Dados dos 5 projetos com maior receita até o final de 2024:")
             st.write(top_5_projects_df)
 
-            with Path('/workspace/scripts/mais_receita_2_semestre_2024.sql') \
-                    .open() as file:
+        try:
+            with Path('/workspace/scripts/mais_receita_2_semestre_2024.sql').open() as file:
                 mais_receita_2_semestre = file.read()
+        except FileNotFoundError:
+                st.warning("Script SQL Somente aparece em desenvolvimento.")
 
-            st.markdown("### Consulta SQL")
-            st.code(mais_receita_2_semestre, language='sql')
+        st.markdown("### Consulta SQL")
+        st.code(mais_receita_2_semestre, language='sql')
 
         colors = generate_colors(len(top_5_projects_df))
 

@@ -26,14 +26,15 @@ def orcamento_excedido_page() -> None:
         with st.expander("Ver detalhes"):
             st.write("Dados dos Projetos que Excederam o Orçamento por Semestre:")
             st.write(excedente_data)
-            with (
-                Path('/workspace/scripts/porcentagem_excedentes.sql')
-                .open()
-            ) as file:
-                porcentagem_excedentes = file.read()
 
-            st.markdown("### Consulta SQL")
-            st.code(porcentagem_excedentes, language='sql')
+            try:
+                with Path('/workspace/scripts/porcentagem_excedentes.sql').open() as file:
+                    porcentagem_excedentes = file.read()
+
+                st.markdown("### Consulta SQL")
+                st.code(porcentagem_excedentes, language='sql')
+            except FileNotFoundError:
+                st.warning("Script SQL Somente aparece em desenvolvimento.")
 
         fig = px.bar(
             excedente_data,
